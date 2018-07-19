@@ -40,6 +40,7 @@ public class RequestHandler extends Thread{
 			String httpMethod     = arrFirstLine[0];
 			String httpUrl        = arrFirstLine[1].equals("/")?"/index.html":arrFirstLine[1];
 			String httpProtocol   = arrFirstLine[2];
+			String respContextType= "";
 			
 			log.info("Http Method   : {}",httpMethod);
 			log.info("Http Url      : {}",httpUrl);
@@ -55,6 +56,9 @@ public class RequestHandler extends Thread{
 				String requestBody=RequestUtill.readData(br,Integer.valueOf(headerMap.get("Content-Length")));
 				log.info(requestBody.trim());                  
 			}
+			if(headerMap.containsKey("Accept")){
+				respContextType=headerMap.get("Accept").split(" ")[0];
+			}
 			
 			DataOutputStream dos = new DataOutputStream(out);
 			
@@ -67,7 +71,7 @@ public class RequestHandler extends Thread{
 			}
 			
             
-			ResponseUtill.response200Header(dos, body.length);
+			ResponseUtill.response200Header(respContextType,dos, body.length);
 			ResponseUtill.responseBody(dos, body);
 			}else{
 				throw new Exception("INVALID FORMAT");

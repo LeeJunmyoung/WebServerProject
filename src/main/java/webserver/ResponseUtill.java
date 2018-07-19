@@ -10,10 +10,10 @@ public class ResponseUtill {
 	
 	private static final Logger log = LoggerFactory.getLogger(ResponseUtill.class);
 
-	public static void response200Header(DataOutputStream dos, int lengthOfBodyContent) {
+	public static void response200Header(String respContextType,DataOutputStream dos, int lengthOfBodyContent) {
         try {
             dos.writeBytes("HTTP/1.1 200 OK \r\n");
-            dos.writeBytes("Content-Type: text/html;charset=utf-8\r\n");
+            dos.writeBytes("Content-Type: "+respContextType+";charset=utf-8\r\n");
             dos.writeBytes("Content-Length: " + lengthOfBodyContent + "\r\n");
             dos.writeBytes("\r\n");
         } catch (IOException e) {
